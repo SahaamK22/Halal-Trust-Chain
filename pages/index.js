@@ -4,7 +4,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>YesHalal</title>
+        <title>YesHalal – Trust Layer</title>
+
       </Head>
 
       {/* ✅ Navigation Bar */}

@@ -1,4 +1,4 @@
-import Navbar from '../../components/navbar';
+import Navbar from '../components/navbar';
 import { useState } from 'react';
 
 export default function BatchEntry() {

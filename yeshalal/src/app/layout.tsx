@@ -1,17 +1,18 @@
-'use client';
+// src/app/layout.tsx
+import './globals.css';
+import { ThirdwebProvider } from '@thirdweb-dev/react';
+import type { ReactNode } from 'react';
 
-import "./globals.css";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
-import { Sepolia } from "@thirdweb-dev/chains";
+export const metadata = {
+  title: 'YesHalal',
+  description: 'Traceable Halal Meat Chain on Blockchain',
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <ThirdwebProvider
-          activeChain={Sepolia}
-          clientId="550162c5fe393a6972126161a6fb65ff" // ✅ Hardcoded clientId here
-        >
+        <ThirdwebProvider clientId="550162c5fe393a6972126161a6fb65ff">
           {children}
         </ThirdwebProvider>
       </body>
