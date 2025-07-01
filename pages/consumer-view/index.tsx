@@ -1,15 +1,16 @@
-import { useRouter } from "next/router";
+// pages/consumer-view/index.tsx
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-export default function ConsumerViewRedirect() {
+export default function ConsumerRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    const { animalId } = router.query;
-    if (animalId) {
-      router.replace(`/consumer-view/${animalId}`);
+    const query = router.query.animalId;
+    if (query) {
+      router.replace(`/consumer-view/${query}`);
     }
   }, [router]);
 
-  return <p className="text-center mt-10">Redirecting...</p>;
+  return <p>Redirecting to consumer view...</p>;
 }
