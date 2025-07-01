@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client';
 
 import { ConnectWallet } from '@thirdweb-dev/react';
@@ -7,7 +6,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-white text-center px-4">
       {/* LOGO */}
-      <img src="/yeshalal/public/yeshalal-logo.svg" alt="YesHalal Logo" className="w-48 h-auto mb-6" />
+      <img src="/yeshalal-logo.svg" alt="YesHalal Logo" className="w-48 h-auto mb-6" />
 
       {/* TITLE */}
       <h1 className="text-4xl font-bold text-green-600 mb-2">✅ YesHalal is Live!</h1>
