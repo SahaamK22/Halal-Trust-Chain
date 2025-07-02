@@ -14,6 +14,7 @@ export default function ContactUs() {
 
         {submitted ? (
           <div className="text-center text-green-600 text-lg">Thanks! We&rsquo;ll reach out soon.</div>
+
         ) : (
           <form
             onSubmit={(e) => {
