@@ -1,6 +1,8 @@
-import Navbar from '../../../components/Navbar';
+'use client';
 
 import { useState } from 'react';
+import Navbar from '../../../components/Navbar';
+
 
 export default function BatchEntry() {
   const [formData, setFormData] = useState({
