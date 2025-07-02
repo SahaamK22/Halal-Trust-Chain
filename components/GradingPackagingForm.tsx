@@ -1,8 +1,7 @@
-// components/GradingPackagingForm.tsx
 'use client';
-
 import { useState } from 'react';
 import { saveEntry } from '../components/utils/saveEntry';
+
 export default function GradingPackagingForm() {
   const [formData, setFormData] = useState({
     animalId: '',
@@ -15,18 +14,15 @@ export default function GradingPackagingForm() {
     batchCode: '',
   });
 
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Save to localStorage using the helper
-      saveEntry(formData.animalId, 'GradingPackaging', formData);
-    
-      alert('Farm Entry Saved Successfully!');
-    
-      // Clear the form after saving
+    saveEntry(formData.animalId, 'GradingPackaging', formData);
+    alert('Grading & Packaging Entry Saved Successfully!');
     setFormData({
       animalId: '',
       gradingType: '',
@@ -40,89 +36,24 @@ export default function GradingPackagingForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-xl shadow bg-white">
       <h2 className="text-xl font-semibold mb-2">Grading & Packaging Entry</h2>
 
-      <input
-        type="text"
-        name="animalId"
-        placeholder="Animal ID"
-        value={formData.animalId}
-        onChange={handleChange}
-        className="input"
-        required
-      />
+      <input type="text" name="animalId" placeholder="Animal ID" value={formData.animalId} onChange={handleChange} className="input" required />
+      <input type="text" name="gradingType" placeholder="Grading Type (e.g., A/B/C)" value={formData.gradingType} onChange={handleChange} className="input" />
+      <input type="text" name="meatCutType" placeholder="Meat Cut Type" value={formData.meatCutType} onChange={handleChange} className="input" />
+      <input type="text" name="packagingType" placeholder="Packaging Type" value={formData.packagingType} onChange={handleChange} className="input" />
+      <input type="number" name="weight" placeholder="Weight (kg)" value={formData.weight} onChange={handleChange} className="input" />
 
-      <input
-        type="text"
-        name="gradingType"
-        placeholder="Grading Type (A/B/C)"
-        value={formData.gradingType}
-        onChange={handleChange}
-        className="input"
-      />
+      <label className="block text-sm font-medium">Packaging Date</label>
+      <input type="date" name="packagingDate" value={formData.packagingDate} onChange={handleChange} className="input" />
 
-      <input
-        type="text"
-        name="meatCutType"
-        placeholder="Meat Cut Type (e.g., Boneless)"
-        value={formData.meatCutType}
-        onChange={handleChange}
-        className="input"
-      />
+      <label className="block text-sm font-medium">Expiry Date</label>
+      <input type="date" name="expiryDate" value={formData.expiryDate} onChange={handleChange} className="input" />
 
-      <input
-        type="text"
-        name="packagingType"
-        placeholder="Packaging Type (e.g., Vacuum Sealed)"
-        value={formData.packagingType}
-        onChange={handleChange}
-        className="input"
-      />
+      <input type="text" name="batchCode" placeholder="Batch Code" value={formData.batchCode} onChange={handleChange} className="input" />
 
-      <input
-        type="number"
-        name="weight"
-        placeholder="Weight (kg)"
-        value={formData.weight}
-        onChange={handleChange}
-        className="input"
-      />
-
-      <div>
-        <label className="block mb-1 font-medium">Packaging Date</label>
-        <input
-          type="date"
-          name="packagingDate"
-          value={formData.packagingDate}
-          onChange={handleChange}
-          className="input"
-        />
-      </div>
-
-      <div>
-        <label className="block mb-1 font-medium">Expiry Date</label>
-        <input
-          type="date"
-          name="expiryDate"
-          value={formData.expiryDate}
-          onChange={handleChange}
-          className="input"
-        />
-      </div>
-
-      <input
-        type="text"
-        name="batchCode"
-        placeholder="Batch Code"
-        value={formData.batchCode}
-        onChange={handleChange}
-        className="input"
-      />
-
-      <button type="submit" className="bg-green-700 text-white px-4 py-2 rounded">
-        Save Entry
-      </button>
+      <button type="submit" className="bg-green-700 text-white px-4 py-2 rounded">Save Entry</button>
     </form>
   );
 }

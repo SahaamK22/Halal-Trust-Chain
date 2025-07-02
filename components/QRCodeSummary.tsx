@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import QRCode from 'react-qr-code';
 
@@ -17,13 +16,13 @@ export default function QRCodeSummary() {
   };
 
   const getConsumerView = (fullData: any) => ({
-    animalId: fullData.farm?.animalId,
-    breed: fullData.farm?.breed,
-    slaughterDate: fullData.slaughterhouse?.slaughterDate,
-    packagingDate: fullData.gradingPackaging?.packagingDate,
-    expiryDate: fullData.gradingPackaging?.expiryDate,
-    origin: fullData.farm?.farmLocation,
-    halalCert: fullData.slaughterhouse?.halalCertificationId,
+    animalId: fullData?.farm?.animalId ?? '',
+    breed: fullData?.farm?.breed ?? '',
+    slaughterDate: fullData?.slaughterhouse?.slaughterDate ?? '',
+    packagingDate: fullData?.gradingPackaging?.packagingDate ?? '',
+    expiryDate: fullData?.gradingPackaging?.expiryDate ?? '',
+    origin: fullData?.farm?.farmLocation ?? '',
+    halalCert: fullData?.slaughterhouse?.halalCertificationId ?? '',
   });
 
   return (
@@ -56,7 +55,7 @@ export default function QRCodeSummary() {
           </div>
 
           <div>
-            <h3 className="text-lg font-bold mb-2">Consumer View (Trust Layer)</h3>
+            <h3 className="text-lg font-bold mb-2">Consumer View (Trust Summary)</h3>
             <pre className="bg-gray-100 p-4 rounded text-sm">
               {JSON.stringify(getConsumerView(data), null, 2)}
             </pre>
@@ -66,14 +65,14 @@ export default function QRCodeSummary() {
             <h3 className="text-lg font-bold mb-2">QR Code (Consumer Summary)</h3>
             <div className="inline-block bg-white p-4 rounded shadow">
               <QRCode
-                value={`https://yes-halal.vercel.app/consumer-view?animalId=${animalId}`}
+                value={`https://yes-halal.vercel.app/consumer-view?animalId=${encodeURIComponent(animalId)}`}
                 size={200}
                 bgColor="#ffffff"
                 fgColor="#000000"
                 level="H"
               />
             </div>
-            <p className="text-sm text-gray-500 mt-2">Scan to verify on YesHalal consumer portal</p>
+            <p className="text-sm text-gray-500 mt-2">Scan to verify on YesHalal portal</p>
           </div>
         </div>
       )}

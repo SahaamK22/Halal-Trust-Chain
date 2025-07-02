@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { saveEntry } from '../components/utils/saveEntry';
+
 export default function LandTransportForm() {
   const [formData, setFormData] = useState({
     animalId: '',
@@ -18,17 +19,21 @@ export default function LandTransportForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Save to localStorage using the helper
-      saveEntry(formData.animalId, 'LandTransport', formData);
-    
-      alert('Farm Entry Saved Successfully!');
-    
-      // Clear the form after saving
+    saveEntry(formData.animalId, 'LandTransport', formData);
+    alert('Land Transport Entry Saved Successfully!');
+    setFormData({
+      animalId: '',
+      transporterName: '',
+      vehicleNumber: '',
+      pickupDateTime: '',
+      dropoffDateTime: '',
+      transportConditions: '',
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold">Land Transport Entry</h2>
+    <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-xl shadow bg-white">
+      <h2 className="text-xl font-semibold mb-4">Land Transport Entry</h2>
 
       <input
         type="text"
@@ -89,10 +94,7 @@ export default function LandTransportForm() {
         required
       />
 
-      <button
-        type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-      >
+      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
         Save Entry
       </button>
     </form>

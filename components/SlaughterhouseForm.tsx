@@ -1,7 +1,6 @@
 'use client';
-import { saveEntry } from '../components/utils/saveEntry';
-
 import React, { useState } from 'react';
+import { saveEntry } from '../components/utils/saveEntry';
 
 export default function SlaughterhouseForm() {
   const [formData, setFormData] = useState({
@@ -16,19 +15,23 @@ export default function SlaughterhouseForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  // Save to localStorage using the helper
-    saveEntry(formData.animalId, 'farmSlaughterhouse', formData);
-  
-    alert('Farm Entry Saved Successfully!');
-  
-    // Clear the form after saving
-};
-
+    e.preventDefault();
+    saveEntry(formData.animalId, 'Slaughterhouse', formData);
+    alert('Slaughterhouse Entry Saved Successfully!');
+    setFormData({
+      animalId: '',
+      slaughterhouseName: '',
+      slaughterDate: '',
+      slaughterMethod: '',
+      halalCertificationId: '',
+      slaughtermanName: '',
+      veterinaryApproval: '',
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -54,22 +57,20 @@ export default function SlaughterhouseForm() {
         required
       />
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Slaughtering Date</label>
-        <input
-          type="date"
-          name="slaughterDate"
-          value={formData.slaughterDate}
-          onChange={handleChange}
-          className="input"
-          required
-        />
-      </div>
+      <label className="block text-sm font-medium">Slaughter Date</label>
+      <input
+        type="date"
+        name="slaughterDate"
+        value={formData.slaughterDate}
+        onChange={handleChange}
+        className="input"
+        required
+      />
 
       <input
         type="text"
         name="slaughterMethod"
-        placeholder="Slaughter Method (e.g., Manual)"
+        placeholder="Slaughter Method"
         value={formData.slaughterMethod}
         onChange={handleChange}
         className="input"
@@ -108,9 +109,7 @@ export default function SlaughterhouseForm() {
         <option value="No">No</option>
       </select>
 
-      <button
-        type="submit"
-        className="bg-green-700 text-white px-4 py-2 rounded">
+      <button type="submit" className="bg-green-700 text-white px-4 py-2 rounded">
         Save Entry
       </button>
     </form>

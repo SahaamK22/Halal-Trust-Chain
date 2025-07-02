@@ -1,4 +1,5 @@
-import Navbar from '../components/navbar';
+import Navbar from '../../../components/Navbar';
+
 import { useState } from 'react';
 
 export default function BatchEntry() {
@@ -31,15 +32,14 @@ export default function BatchEntry() {
     buyerDetails: ''
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Submitted Data:', formData);
-    // Future: upload to backend or blockchain
-  };
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log('Submitted Data:', formData);
+};
 
   return (
     <>
