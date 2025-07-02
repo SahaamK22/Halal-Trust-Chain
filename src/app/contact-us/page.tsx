@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import Navbar from '../../../components/Navbar';
 
-
-
 export default function ContactUs() {
   const [submitted, setSubmitted] = useState(false);
 
@@ -15,7 +13,7 @@ export default function ContactUs() {
         <h1 className="text-4xl font-bold mb-6 text-center">Contact Us</h1>
 
         {submitted ? (
-          <div className="text-center text-green-600 text-lg">Thanks! We'll reach out soon.</div>
+          <div className="text-center text-green-600 text-lg">Thanks! We&rsquo;ll reach out soon.</div>
         ) : (
           <form
             onSubmit={(e) => {
