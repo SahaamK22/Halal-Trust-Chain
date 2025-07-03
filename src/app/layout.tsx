@@ -1,20 +1,24 @@
-// src/app/layout.tsx
 import './globals.css';
-import { ThirdwebProvider } from '@thirdweb-dev/react';
-import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import ThirdwebWrapper from '../providers/ThirdwebWrapper';
 
-export const metadata = {
-  title: 'YesHalal',
-  description: 'Traceable Halal Meat Chain on Blockchain',
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'YesHalal – Halal Meat Trust Chain',
+  description: 'Track and trace halal meat from farm to fork with blockchain transparency.',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>
-        <ThirdwebProvider clientId="550162c5fe393a6972126161a6fb65ff">
-          {children}
-        </ThirdwebProvider>
+      <body className={inter.className}>
+        <ThirdwebWrapper>{children}</ThirdwebWrapper>
       </body>
     </html>
   );
