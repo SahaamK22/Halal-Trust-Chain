@@ -1,4 +1,4 @@
-'use client';
+
 // app/layout.tsx
 import './globals.css';
 import { ReactNode } from 'react';
@@ -15,7 +15,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  if (typeof window === 'undefined') return null;
+ 
   return (
     <html lang="en">
       <body>
