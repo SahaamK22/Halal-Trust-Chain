@@ -3,6 +3,7 @@
 import { ConnectWallet } from '@thirdweb-dev/react';
 
 export default function Home() {
+  if (typeof window === 'undefined') return null;
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-white text-center px-4">
       {/* LOGO */}

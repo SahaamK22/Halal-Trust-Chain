@@ -11,6 +11,7 @@ type DocumentEntry = {
 };
 
 export default function DocumentationUploadForm() {
+  if (typeof window === 'undefined') return null;
   const [animalId, setAnimalId] = useState('');
   const [documents, setDocuments] = useState<DocumentEntry[]>([
     { batchCode: '', uploadDate: '', documentName: '', file: null, notes: '' }

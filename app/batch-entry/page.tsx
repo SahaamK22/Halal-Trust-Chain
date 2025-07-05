@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 
-
 export default function BatchEntry() {
+  if (typeof window === 'undefined') return null;
   const [formData, setFormData] = useState({
     animalId: '',
     breed: '',

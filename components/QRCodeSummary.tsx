@@ -3,6 +3,7 @@ import { useState } from 'react';
 import QRCode from 'react-qr-code';
 
 export default function QRCodeSummary() {
+  if (typeof window === 'undefined') return null;
   const [animalId, setAnimalId] = useState('');
   const [data, setData] = useState<any>(null);
 

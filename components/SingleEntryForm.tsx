@@ -9,6 +9,7 @@ import ColdStorageForm from './ColdStorageForm';
 import ShippingForm from './ShippingForm';
 
 export default function SingleEntryForm() {
+  if (typeof window === 'undefined') return null;
   return (
     <div className="space-y-8 border p-6 rounded-xl shadow bg-white">
       <h2 className="text-2xl font-semibold text-center">Single Entry Form (Complete Journey)</h2>

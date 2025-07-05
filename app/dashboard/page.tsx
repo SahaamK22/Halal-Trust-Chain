@@ -15,6 +15,7 @@ import UploadHistory from '@/components/UploadHistory';
 
 
 export default function Dashboard() {
+  if (typeof window === 'undefined') return null;
   return (
     <div className="p-4 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">YesHalal Admin Dashboard</h1>

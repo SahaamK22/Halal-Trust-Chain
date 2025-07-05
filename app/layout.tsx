@@ -1,3 +1,4 @@
+'use client';
 // app/layout.tsx
 import './globals.css';
 import { ReactNode } from 'react';
@@ -8,11 +9,13 @@ import { ThirdwebProvider } from '@thirdweb-dev/react';
 import { Sepolia } from '@thirdweb-dev/chains';
 
 export const metadata = {
+
   title: 'YesHalal',
   description: 'Halal Meat Traceability Dashboard',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  if (typeof window === 'undefined') return null;
   return (
     <html lang="en">
       <body>

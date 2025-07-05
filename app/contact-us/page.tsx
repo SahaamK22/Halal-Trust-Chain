@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 
 export default function ContactUs() {
+  if (typeof window === 'undefined') return null;
   const [submitted, setSubmitted] = useState(false);
 
   return (

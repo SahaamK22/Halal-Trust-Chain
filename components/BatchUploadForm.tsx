@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 
 export default function BatchUploadForm() {
+  if (typeof window === 'undefined') return null;
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

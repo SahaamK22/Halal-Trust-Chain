@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { saveEntry } from '../components/utils/saveEntry';
 
 export default function ShippingForm() {
+  if (typeof window === 'undefined') return null;
   const [formData, setFormData] = useState({
     animalId: '',
     shippingCompany: '',

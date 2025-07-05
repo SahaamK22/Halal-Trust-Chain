@@ -3,6 +3,7 @@
 import React from 'react';
 
 export default function UploadHistory() {
+  if (typeof window === 'undefined') return null;
   // Example placeholder history data
   const historyData = [
     { batchId: 'BATCH001', date: '2025-06-14', totalAnimals: 12 },

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { saveEntry } from '../components/utils/saveEntry';
 
 export default function SlaughterhouseForm() {
+  if (typeof window === 'undefined') return null;
   const [formData, setFormData] = useState({
     animalId: '',
     slaughterhouseName: '',
