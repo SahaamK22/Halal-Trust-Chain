@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 
 export default function BatchEntry() {
-  if (typeof window === 'undefined') return null;
   const [formData, setFormData] = useState({
     animalId: '',
     breed: '',
@@ -31,17 +30,19 @@ export default function BatchEntry() {
     dispatchDetails: '',
     shippingLine: '',
     deliveryTransport: '',
-    buyerDetails: ''
+    buyerDetails: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  console.log('Submitted Data:', formData);
-};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('Submitted Data:', formData);
+  };
+
+  if (typeof window === 'undefined') return null;
 
   return (
     <>

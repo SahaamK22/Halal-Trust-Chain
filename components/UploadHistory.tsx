@@ -1,10 +1,7 @@
 'use client';
-
 import React from 'react';
 
 export default function UploadHistory() {
-  if (typeof window === 'undefined') return null;
-  // Example placeholder history data
   const historyData = [
     { batchId: 'BATCH001', date: '2025-06-14', totalAnimals: 12 },
     { batchId: 'BATCH002', date: '2025-06-13', totalAnimals: 8 },
@@ -13,7 +10,6 @@ export default function UploadHistory() {
   return (
     <div className="space-y-4 border p-6 rounded-xl shadow bg-white">
       <h2 className="text-xl font-semibold">Upload History</h2>
-
       <table className="w-full border border-gray-300 rounded text-sm">
         <thead className="bg-gray-100">
           <tr>

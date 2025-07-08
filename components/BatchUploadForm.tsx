@@ -1,34 +1,37 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
 
-export default function BatchUploadForm() {
-  if (typeof window === 'undefined') return null;
+import React, { useState } from "react";
+
+const BatchUploadForm = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [previewData, setPreviewData] = useState<any[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
+    const selected = e.target.files?.[0];
+    if (selected) {
+      setFile(selected);
+      setError(null);
+      // Add parsing logic here
+    } else {
+      setFile(null);
+      setError("No file selected.");
     }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!file) {
-      alert('Please upload a file.');
-      return;
-    }
-
-    // Simulate file processing
-    alert(`Batch file "${file.name}" uploaded successfully!`);
-    setFile(null);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-xl shadow bg-white">
-      <h2 className="text-xl font-semibold">Batch Upload</h2>
-
-      <input type="file" accept=".csv,.xlsx" onChange={handleFileChange} className="input" />
-      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Upload Batch</button>
-    </form>
+    <div className="p-4 border rounded">
+      <h2 className="text-lg font-bold mb-2">Batch Upload</h2>
+      <input
+        type="file"
+        accept=".csv, .xlsx"
+        onChange={handleFileChange}
+        className="mb-4"
+      />
+      {error && <p className="text-red-600">{error}</p>}
+      {/* Add preview table rendering here if needed */}
+    </div>
   );
-}
+};
+
+export default BatchUploadForm;

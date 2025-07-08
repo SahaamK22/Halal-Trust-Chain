@@ -1,103 +1,61 @@
-'use client';
-import { useState } from 'react';
-import { saveEntry } from '../components/utils/saveEntry';
+"use client";
 
-export default function LandTransportForm() {
-  if (typeof window === 'undefined') return null;
-  const [formData, setFormData] = useState({
-    animalId: '',
-    transporterName: '',
-    vehicleNumber: '',
-    pickupDateTime: '',
-    dropoffDateTime: '',
-    transportConditions: '',
-  });
+import React, { useState } from "react";
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    saveEntry(formData.animalId, 'LandTransport', formData);
-    alert('Land Transport Entry Saved Successfully!');
-    setFormData({
-      animalId: '',
-      transporterName: '',
-      vehicleNumber: '',
-      pickupDateTime: '',
-      dropoffDateTime: '',
-      transportConditions: '',
-    });
-  };
+const LandTransportForm = () => {
+  const [animalId, setAnimalId] = useState("");
+  const [transporterName, setTransporterName] = useState("");
+  const [vehicleNumber, setVehicleNumber] = useState("");
+  const [pickupDateTime, setPickupDateTime] = useState("");
+  const [dropoffDateTime, setDropoffDateTime] = useState("");
+  const [transportConditions, setTransportConditions] = useState("");
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-xl shadow bg-white">
-      <h2 className="text-xl font-semibold mb-4">Land Transport Entry</h2>
-
+    <div className="p-4 border rounded">
+      <h2 className="text-lg font-bold mb-2">Land Transport Entry</h2>
       <input
         type="text"
-        name="animalId"
         placeholder="Animal ID"
-        value={formData.animalId}
-        onChange={handleChange}
-        className="input"
-        required
+        value={animalId}
+        onChange={(e) => setAnimalId(e.target.value)}
+        className="mb-2 p-2 border w-full"
       />
-
       <input
         type="text"
-        name="transporterName"
         placeholder="Transporter Name"
-        value={formData.transporterName}
-        onChange={handleChange}
-        className="input"
-        required
+        value={transporterName}
+        onChange={(e) => setTransporterName(e.target.value)}
+        className="mb-2 p-2 border w-full"
       />
-
       <input
         type="text"
-        name="vehicleNumber"
         placeholder="Vehicle Number"
-        value={formData.vehicleNumber}
-        onChange={handleChange}
-        className="input"
-        required
+        value={vehicleNumber}
+        onChange={(e) => setVehicleNumber(e.target.value)}
+        className="mb-2 p-2 border w-full"
       />
-
-      <label className="block text-sm font-medium">Pickup Date & Time</label>
       <input
         type="datetime-local"
-        name="pickupDateTime"
-        value={formData.pickupDateTime}
-        onChange={handleChange}
-        className="input"
-        required
+        placeholder="Pickup Date & Time"
+        value={pickupDateTime}
+        onChange={(e) => setPickupDateTime(e.target.value)}
+        className="mb-2 p-2 border w-full"
       />
-
-      <label className="block text-sm font-medium">Drop-off Date & Time</label>
       <input
         type="datetime-local"
-        name="dropoffDateTime"
-        value={formData.dropoffDateTime}
-        onChange={handleChange}
-        className="input"
-        required
+        placeholder="Drop-off Date & Time"
+        value={dropoffDateTime}
+        onChange={(e) => setDropoffDateTime(e.target.value)}
+        className="mb-2 p-2 border w-full"
       />
-
       <textarea
-        name="transportConditions"
-        placeholder="Transport Conditions (e.g., A/C, Covered)"
-        value={formData.transportConditions}
-        onChange={handleChange}
-        className="input"
-        required
+        placeholder="Transport Conditions"
+        value={transportConditions}
+        onChange={(e) => setTransportConditions(e.target.value)}
+        className="mb-2 p-2 border w-full"
       />
-
-      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Save Entry
-      </button>
-    </form>
+    </div>
   );
-}
+};
+
+export default LandTransportForm;

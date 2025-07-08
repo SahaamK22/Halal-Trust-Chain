@@ -1,61 +1,36 @@
-'use client';
-import { useState } from 'react';
-import { saveEntry } from '../components/utils/saveEntry';
+"use client";
 
-export default function ColdStorageForm() {
-  if (typeof window === 'undefined') return null;
-  const [formData, setFormData] = useState({
-    animalId: '',
-    storageFacilityName: '',
-    temperature: '',
-    humidity: '',
-    entryDate: '',
-    exitDate: '',
-    storageConditions: '',
-  });
+import React, { useState } from "react";
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    saveEntry(formData.animalId, 'ColdStorage', formData);
-    alert('Cold Storage Entry Saved Successfully!');
-  };
+const ColdStorageForm = () => {
+  const [storageTemp, setStorageTemp] = useState("");
+  const [storageDate, setStorageDate] = useState("");
+  const [notes, setNotes] = useState("");
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-xl shadow bg-white">
-      <h2 className="text-xl font-semibold">Cold Storage Entry</h2>
-      {[
-        ['Animal ID', 'animalId'],
-        ['Storage Facility Name', 'storageFacilityName'],
-        ['Temperature (e.g., 2°C)', 'temperature'],
-        ['Humidity (e.g., 70%)', 'humidity'],
-        ['Storage Conditions (Optional)', 'storageConditions'],
-      ].map(([placeholder, name]) => (
-        <input
-          key={name}
-          type="text"
-          name={name}
-          placeholder={placeholder}
-          value={formData[name as keyof typeof formData]}
-          onChange={handleChange}
-          className="input"
-          required={name !== 'storageConditions'}
-        />
-      ))}
-
-      <label className="block text-sm font-medium">Entry Date</label>
-      <input type="date" name="entryDate" value={formData.entryDate} onChange={handleChange} className="input" />
-
-      <label className="block text-sm font-medium">Exit Date</label>
-      <input type="date" name="exitDate" value={formData.exitDate} onChange={handleChange} className="input" />
-
-      <button type="submit" className="bg-green-700 text-white px-4 py-2 rounded">
-        Save Entry
-      </button>
-    </form>
+    <div className="p-4 border rounded">
+      <h2 className="text-lg font-bold mb-2">Cold Storage Entry</h2>
+      <input
+        type="text"
+        placeholder="Storage Temperature"
+        value={storageTemp}
+        onChange={(e) => setStorageTemp(e.target.value)}
+        className="mb-2 p-2 border w-full"
+      />
+      <input
+        type="date"
+        value={storageDate}
+        onChange={(e) => setStorageDate(e.target.value)}
+        className="mb-2 p-2 border w-full"
+      />
+      <textarea
+        placeholder="Notes"
+        value={notes}
+        onChange={(e) => setNotes(e.target.value)}
+        className="mb-2 p-2 border w-full"
+      />
+    </div>
   );
-}
+};
+
+export default ColdStorageForm;
