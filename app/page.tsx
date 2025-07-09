@@ -10,7 +10,7 @@ export default function Home() {
       <img src="/yeshalal-logo.svg" alt="YesHalal Logo" className="w-48 h-auto mb-6" />
 
       {/* TITLE */}
-      <h1 className="text-4xl font-bold text-green-600 mb-2">✅ YesHalal is Live!</h1>
+      <h1 className="text-4xl font-bold text-green-600 mb-2">YesHalal</h1>
 
       {/* SUBTITLE */}
       <p className="text-lg mb-6 text-gray-700">
