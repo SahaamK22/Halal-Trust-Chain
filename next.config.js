@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  trailingSlash: false
-  module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -10,5 +8,5 @@ const nextConfig = {
     ignoreBuildErrors: true,
   }
 }
-}
-module.exports = nextConfig
+
+module.exports = nextConfig;
