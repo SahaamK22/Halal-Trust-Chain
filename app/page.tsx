@@ -1,28 +1,45 @@
-'use client';
-
-import { ConnectWallet } from '@thirdweb-dev/react';
+'use client'
+import Head from 'next/head'
 
 export default function Home() {
-  if (typeof window === 'undefined') return null;
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-white text-center px-4">
-      {/* LOGO */}
-      <img src="/yeshalal-logo.svg" alt="YesHalal Logo" className="w-48 h-auto mb-6" />
+    <>
+      <Head>
+        <title>YesHalal</title>
+      </Head>
 
-      {/* TITLE */}
-      <h1 className="text-4xl font-bold text-green-600 mb-2">YesHalal</h1>
+      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-md">
+        <nav className="flex gap-6 text-lg font-medium text-gray-800">
+          <a href="/" className="hover:text-blue-600">Home</a>
+          <a href="/about-us" className="hover:text-blue-600">About Us</a>
+          <a href="/how-it-works" className="hover:text-blue-600">How It Works</a>
+          <a href="/contact-us" className="hover:text-blue-600">Contact</a>
+        </nav>
 
-      {/* SUBTITLE */}
-      <p className="text-lg mb-6 text-gray-700">
-        Welcome to the Halal Meat Journey – From Farm to Fork.
-      </p>
+        <a
+          href="/dashboard"
+          className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-gray-800"
+        >
+          Demo Version
+        </a>
+      </header>
 
-      {/* CONNECT WALLET */}
-      <ConnectWallet
-        theme="light"
-        btnTitle="Connect Wallet to Continue"
-        className="scale-110"
-      />
-    </main>
-  );
+      <main className="flex flex-col items-center justify-center min-h-[80vh] px-6 py-20 text-center bg-gray-50">
+        <h1 className="text-5xl font-bold mb-4">Welcome to YesHalal</h1>
+        <p className="text-lg text-gray-600 mb-6">
+          Your trusted Halal Meat Traceability Platform powered by Blockchain.
+        </p>
+        <a
+          href="/dashboard"
+          className="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 text-lg"
+        >
+          Go to Admin Dashboard
+        </a>
+      </main>
+
+      <footer className="text-center py-6 text-gray-500 bg-white border-t">
+        © 2025 YesHalal
+      </footer>
+    </>
+  )
 }

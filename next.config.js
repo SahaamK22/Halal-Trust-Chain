@@ -1,12 +1,14 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   output: 'standalone',
-  eslint: {
-    ignoreDuringBuilds: true,
+  images: {
+    unoptimized: true,
   },
-  typescript: {
-    ignoreBuildErrors: true,
+  experimental: {
+    largePageDataBytes: 128 * 100000,
   }
-}
+};
 
 module.exports = nextConfig;

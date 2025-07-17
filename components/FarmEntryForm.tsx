@@ -1,37 +1,23 @@
-"use client";
-
+// components/FarmEntryForm.tsx
 import React, { useState } from "react";
 
-const FarmEntryForm = () => {
-  const [animalId, setAnimalId] = useState("");
-  const [breed, setBreed] = useState("");
-  const [farmerName, setFarmerName] = useState("");
+type FarmEntryFormProps = {
+  onNext: (data: Record<string, any>) => void;
+};
+
+const FarmEntryForm: React.FC<FarmEntryFormProps> = ({ onNext }) => {
+  const [formData, setFormData] = useState({});
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onNext(formData);
+  };
 
   return (
-    <div className="p-4 border rounded">
-      <h2 className="text-lg font-bold mb-2">Farm Entry</h2>
-      <input
-        type="text"
-        placeholder="Animal ID"
-        value={animalId}
-        onChange={(e) => setAnimalId(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Breed"
-        value={breed}
-        onChange={(e) => setBreed(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Farmer Name"
-        value={farmerName}
-        onChange={(e) => setFarmerName(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-    </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {/* your inputs */}
+      <button type="submit" className="btn-primary">Next</button>
+    </form>
   );
 };
 

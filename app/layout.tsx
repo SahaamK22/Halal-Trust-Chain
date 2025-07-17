@@ -1,19 +1,26 @@
+// app/layout.tsx
 import './globals.css';
-import { ReactNode } from 'react';
-import ReactQueryProvider from '../src/providers/ReactQueryProvider';
-import ThirdwebWrapper from './ThirdwebProvider';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import ThirdwebWrapper from './ThirdwebProvider'; // ✅ Correct import of default export
 
-export const metadata = {
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
   title: 'YesHalal',
-  description: 'Halal Meat Traceability Dashboard',
+  description: 'Halal Meat Traceability Platform powered by Blockchain',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <ThirdwebWrapper>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          {children}
         </ThirdwebWrapper>
       </body>
     </html>

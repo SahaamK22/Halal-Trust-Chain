@@ -1,68 +1,50 @@
-"use client";
+// components/SlaughterhouseForm.tsx
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const SlaughterhouseForm = () => {
-  const [animalId, setAnimalId] = useState("");
-  const [slaughterhouseName, setSlaughterhouseName] = useState("");
-  const [slaughterDate, setSlaughterDate] = useState("");
-  const [slaughterMethod, setSlaughterMethod] = useState("");
-  const [halalCertId, setHalalCertId] = useState("");
-  const [slaughtermanName, setSlaughtermanName] = useState("");
-  const [vetApproval, setVetApproval] = useState("");
+interface SlaughterhouseFormProps {
+  onNext: (data: Record<string, any>) => void;
+  onPrev: () => void;
+}
+
+const SlaughterhouseForm: React.FC<SlaughterhouseFormProps> = ({ onNext, onPrev }) => {
+  const [formData, setFormData] = useState({
+    animalId: '',
+    slaughterhouseName: '',
+    slaughterDate: '',
+    slaughterMethod: '',
+    halalCertificationId: '',
+    slaughtermanName: '',
+    veterinaryApproval: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    onNext(formData);
+  };
 
   return (
-    <div className="p-4 border rounded">
-      <h2 className="text-lg font-bold mb-2">Slaughterhouse Entry</h2>
-      <input
-        type="text"
-        placeholder="Animal ID"
-        value={animalId}
-        onChange={(e) => setAnimalId(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Slaughterhouse Name"
-        value={slaughterhouseName}
-        onChange={(e) => setSlaughterhouseName(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="date"
-        placeholder="Slaughter Date"
-        value={slaughterDate}
-        onChange={(e) => setSlaughterDate(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Slaughter Method"
-        value={slaughterMethod}
-        onChange={(e) => setSlaughterMethod(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Halal Certification ID"
-        value={halalCertId}
-        onChange={(e) => setHalalCertId(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Slaughterman Name"
-        value={slaughtermanName}
-        onChange={(e) => setSlaughtermanName(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
-      <input
-        type="text"
-        placeholder="Veterinary Approval"
-        value={vetApproval}
-        onChange={(e) => setVetApproval(e.target.value)}
-        className="mb-2 p-2 border w-full"
-      />
+    <div className="p-4 space-y-4 bg-white rounded shadow">
+      <h2 className="text-xl font-bold">Slaughterhouse Entry</h2>
+      {Object.keys(formData).map((field) => (
+        <input
+          key={field}
+          type="text"
+          name={field}
+          placeholder={field}
+          value={(formData as any)[field]}
+          onChange={handleChange}
+          className="w-full p-2 border rounded"
+        />
+      ))}
+      <div className="flex justify-between">
+        <button onClick={onPrev} className="px-4 py-2 bg-gray-300 rounded">Previous</button>
+        <button onClick={handleSubmit} className="px-4 py-2 bg-green-500 text-white rounded">Next</button>
+      </div>
     </div>
   );
 };
