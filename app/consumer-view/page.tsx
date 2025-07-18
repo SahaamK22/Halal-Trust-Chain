@@ -24,19 +24,23 @@ export default function ConsumerViewPage() {
     const raw = localStorage.getItem(`yeshalal-${animalId}`);
     if (!raw) return;
 
-    const data = JSON.parse(raw);
+    try {
+      const data = JSON.parse(raw);
 
-    const view: ConsumerSummary = {
-      animalId: data?.farm?.animalId ?? '',
-      breed: data?.farm?.breed ?? '',
-      slaughterDate: data?.slaughterhouse?.slaughterDate ?? '',
-      packagingDate: data?.gradingPackaging?.packagingDate ?? '',
-      expiryDate: data?.gradingPackaging?.expiryDate ?? '',
-      origin: data?.farm?.farmLocation ?? '',
-      halalCert: data?.slaughterhouse?.halalCertificationId ?? '',
-    };
+      const view: ConsumerSummary = {
+        animalId: data?.farm?.animalId ?? '',
+        breed: data?.farm?.breed ?? '',
+        slaughterDate: data?.slaughterhouse?.slaughterDate ?? '',
+        packagingDate: data?.gradingPackaging?.packagingDate ?? '',
+        expiryDate: data?.gradingPackaging?.expiryDate ?? '',
+        origin: data?.farm?.farmLocation ?? '',
+        halalCert: data?.slaughterhouse?.halalCertificationId ?? '',
+      };
 
-    setSummary(view);
+      setSummary(view);
+    } catch (err) {
+      console.error('Failed to parse consumer data:', err);
+    }
   }, [animalId]);
 
   return (
@@ -50,12 +54,14 @@ export default function ConsumerViewPage() {
           {Object.entries(summary).map(([key, val]) => (
             <p key={key} className="capitalize">
               <strong>{key.replace(/([A-Z])/g, ' $1')}: </strong>
-              {String(val)}
+              {val || 'N/A'}
             </p>
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-500">No data found for Animal ID: <strong>{animalId}</strong></p>
+        <p className="text-center text-gray-500">
+          No data found for Animal ID: <strong>{animalId}</strong>
+        </p>
       )}
     </div>
   );
