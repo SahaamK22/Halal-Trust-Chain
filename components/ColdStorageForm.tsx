@@ -1,85 +1,100 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import { useState, useEffect } from 'react';
 
-type Props = {
-  onNext: (data: any) => void;
+interface ColdStorageFormProps {
+  animalId: string;
+  onSave: (data: Record<string, any>) => void;
+  onNext: (data: Record<string, any>) => void;
   onPrev: () => void;
-};
+}
 
-const ColdStorageForm = ({ onNext, onPrev }: Props) => {
-  const [facility, setFacility] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [humidity, setHumidity] = useState("");
-  const [entryDate, setEntryDate] = useState("");
-  const [exitDate, setExitDate] = useState("");
+const ColdStorageForm = ({ animalId, onSave, onNext, onPrev }: ColdStorageFormProps) => {
+  const [storageData, setStorageData] = useState({
+    animalId,
+    storageFacilityName: '',
+    temperature: '',
+    humidity: '',
+    storageStartDate: '',
+    storageEndDate: '',
+    handlingStaff: '',
+  });
 
-  const handleNext = () => {
-    onNext({
-      facility,
-      temperature,
-      humidity,
-      entryDate,
-      exitDate,
-    });
+  useEffect(() => {
+    const savedData = localStorage.getItem(`coldStorageData-${animalId}`);
+    if (savedData) {
+      setStorageData(JSON.parse(savedData));
+    }
+  }, [animalId]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStorageData({ ...storageData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem(`coldStorageData-${animalId}`, JSON.stringify(storageData));
+    onSave(storageData);
+    onNext(storageData);
   };
 
   return (
-    <div className="p-4 border rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Cold Storage</h2>
-
+    <div className="space-y-4 p-4">
+      <h2 className="text-xl font-semibold">Cold Storage Entry</h2>
       <input
         type="text"
-        placeholder="Storage Facility"
-        value={facility}
-        onChange={(e) => setFacility(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        name="storageFacilityName"
+        placeholder="Storage Facility Name"
+        value={storageData.storageFacilityName}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
       <input
         type="text"
+        name="temperature"
         placeholder="Temperature (°C)"
-        value={temperature}
-        onChange={(e) => setTemperature(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        value={storageData.temperature}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
       <input
         type="text"
+        name="humidity"
         placeholder="Humidity (%)"
-        value={humidity}
-        onChange={(e) => setHumidity(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        value={storageData.humidity}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
       <input
         type="date"
-        placeholder="Entry Date"
-        value={entryDate}
-        onChange={(e) => setEntryDate(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        name="storageStartDate"
+        placeholder="Storage Start Date"
+        value={storageData.storageStartDate}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
       <input
         type="date"
-        placeholder="Exit Date"
-        value={exitDate}
-        onChange={(e) => setExitDate(e.target.value)}
-        className="mb-4 p-2 border rounded w-full"
+        name="storageEndDate"
+        placeholder="Storage End Date"
+        value={storageData.storageEndDate}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
+      />
+      <input
+        type="text"
+        name="handlingStaff"
+        placeholder="Handled By"
+        value={storageData.handlingStaff}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
 
-      <div className="flex justify-between">
-        <button
-          onClick={onPrev}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-        >
-          Previous
+      <div className="flex justify-between pt-4">
+        <button onClick={onPrev} className="bg-gray-500 text-white px-4 py-2 rounded">
+          Back
         </button>
-        <button
-          onClick={handleNext}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-        >
-          Next
+        <button onClick={handleSubmit} className="bg-blue-600 text-white px-4 py-2 rounded">
+          Save & Continue
         </button>
       </div>
     </div>

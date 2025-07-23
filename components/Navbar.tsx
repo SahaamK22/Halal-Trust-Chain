@@ -1,7 +1,8 @@
-// components/navbar.js
+// components/Navbar.tsx
+'use client';
 import Link from 'next/link';
 
-export default function navbar() {
+export default function Navbar() {
   return (
     <nav className="bg-white shadow py-4 px-6 flex flex-wrap justify-between items-center">
       <div className="flex flex-wrap gap-4 text-lg font-medium text-gray-800">

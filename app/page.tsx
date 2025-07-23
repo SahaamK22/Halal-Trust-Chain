@@ -1,4 +1,5 @@
 'use client'
+
 import Head from 'next/head'
 
 export default function Home() {
@@ -10,15 +11,15 @@ export default function Home() {
 
       <header className="flex justify-between items-center px-6 py-4 bg-white shadow-md">
         <nav className="flex gap-6 text-lg font-medium text-gray-800">
-          <a href="/" className="hover:text-blue-600">Home</a>
-          <a href="/about-us" className="hover:text-blue-600">About Us</a>
-          <a href="/how-it-works" className="hover:text-blue-600">How It Works</a>
-          <a href="/contact-us" className="hover:text-blue-600">Contact</a>
+          <a href="/" className="hover:text-green-600">Home</a>
+          <a href="/about-us" className="hover:text-green-600">About Us</a>
+          <a href="/how-it-works" className="hover:text-green-600">How It Works</a>
+          <a href="/contact-us" className="hover:text-green-600">Contact</a>
         </nav>
 
         <a
           href="/dashboard"
-          className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-gray-800"
+          className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700"
         >
           Demo Version
         </a>
@@ -26,19 +27,19 @@ export default function Home() {
 
       <main className="flex flex-col items-center justify-center min-h-[80vh] px-6 py-20 text-center bg-gray-50">
         <h1 className="text-5xl font-bold mb-4">Welcome to YesHalal</h1>
-        <p className="text-lg text-gray-600 mb-6">
-          Your trusted Halal Meat Traceability Platform powered by Blockchain.
+        <p className="text-lg text-gray-600 mb-6 max-w-xl">
+          Your trusted Halal Meat Traceability Platform powered by Blockchain. Track and verify every step from farm to fork.
         </p>
         <a
           href="/dashboard"
-          className="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 text-lg"
+          className="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 text-lg transition-all"
         >
           Go to Admin Dashboard
         </a>
       </main>
 
       <footer className="text-center py-6 text-gray-500 bg-white border-t">
-        © 2025 YesHalal
+        © 2025 YesHalal. All rights reserved.
       </footer>
     </>
   )

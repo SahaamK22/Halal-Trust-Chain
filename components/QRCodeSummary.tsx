@@ -1,24 +1,51 @@
-"use client";
+'use client'
 
-import React from "react";
-import { QRCodeCanvas } from "qrcode.react";
+import { useSearchParams } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
-interface QRCodeSummaryProps {
-  data: Record<string, any>;
-}
+export default function QRCodeSummary() {
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
 
-const QRCodeSummary: React.FC<QRCodeSummaryProps> = ({ data }) => {
-  const qrValue = JSON.stringify(data);
+  const { data: summary, isLoading, isError } = useQuery({
+    queryKey: ['summary', id],
+    queryFn: async () => {
+      const res = await axios.get(`/api/summary?id=${id}`)
+      return res.data
+    },
+    enabled: !!id,
+  })
+
+  if (!id) {
+    return <p className="text-red-500">No QR ID provided in URL.</p>
+  }
+
+  if (isLoading) return <p>Loading summary...</p>
+  if (isError) return <p>Error loading summary. Please try again.</p>
+
+  const consumerFields = [
+    { label: 'Animal ID', value: summary?.animalId },
+    { label: 'Breed', value: summary?.breed },
+    { label: 'Halal Certified By', value: summary?.halalCertificationId },
+    { label: 'Meat Cut', value: summary?.meatCutType },
+    { label: 'Packaging Date', value: summary?.packagingDate },
+    { label: 'Expiry Date', value: summary?.expiryDate },
+    { label: 'Weight (kg)', value: summary?.weight },
+    { label: 'Transport Conditions', value: summary?.transportConditions },
+    { label: 'Storage Facility', value: summary?.coldStorageName },
+  ]
 
   return (
-    <div className="space-y-4 p-4 rounded shadow bg-white">
-      <h2 className="text-xl font-bold text-gray-800">QR Code Summary</h2>
-      <QRCodeCanvas value={qrValue} size={200} />
-      <pre className="bg-gray-100 text-sm p-4 rounded overflow-x-auto whitespace-pre-wrap">
-        {qrValue}
-      </pre>
+    <div className="p-6 bg-white rounded-xl shadow-lg max-w-2xl mx-auto mt-6">
+      <h1 className="text-2xl font-bold mb-4">Halal Meat Product Summary</h1>
+      <ul className="space-y-2">
+        {consumerFields.map(({ label, value }) => (
+          <li key={label} className="text-gray-700">
+            <strong>{label}:</strong> {value || 'N/A'}
+          </li>
+        ))}
+      </ul>
     </div>
-  );
-};
-
-export default QRCodeSummary;
+  )
+}

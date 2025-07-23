@@ -1,95 +1,100 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import { useState, useEffect } from 'react';
 
-type Props = {
-  onNext: (data: any) => void;
+interface ShippingFormProps {
+  animalId: string;
+  onSave: (data: Record<string, any>) => void;
+  onNext: (data: Record<string, any>) => void;
   onPrev: () => void;
-};
+}
 
-const ShippingForm = ({ onNext, onPrev }: Props) => {
-  const [shippingCompany, setShippingCompany] = useState("");
-  const [departurePort, setDeparturePort] = useState("");
-  const [arrivalPort, setArrivalPort] = useState("");
-  const [shippingDate, setShippingDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [shippingConditions, setShippingConditions] = useState("");
+const ShippingForm = ({ animalId, onSave, onNext, onPrev }: ShippingFormProps) => {
+  const [shippingData, setShippingData] = useState({
+    animalId,
+    shippingCompany: '',
+    shippingMethod: '',
+    departureDate: '',
+    arrivalDate: '',
+    trackingNumber: '',
+    destination: '',
+  });
 
-  const handleNext = () => {
-    onNext({
-      shippingCompany,
-      departurePort,
-      arrivalPort,
-      shippingDate,
-      arrivalDate,
-      shippingConditions,
-    });
+  useEffect(() => {
+    const savedData = localStorage.getItem(`shippingData-${animalId}`);
+    if (savedData) {
+      setShippingData(JSON.parse(savedData));
+    }
+  }, [animalId]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setShippingData({ ...shippingData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem(`shippingData-${animalId}`, JSON.stringify(shippingData));
+    onSave(shippingData);
+    onNext(shippingData);
   };
 
   return (
-    <div className="p-4 border rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Shipping Information</h2>
-
+    <div className="space-y-4 p-4">
+      <h2 className="text-xl font-semibold">Shipping Entry</h2>
       <input
         type="text"
+        name="shippingCompany"
         placeholder="Shipping Company"
-        value={shippingCompany}
-        onChange={(e) => setShippingCompany(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        value={shippingData.shippingCompany}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
       <input
         type="text"
-        placeholder="Departure Port / Location"
-        value={departurePort}
-        onChange={(e) => setDeparturePort(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        name="shippingMethod"
+        placeholder="Shipping Method"
+        value={shippingData.shippingMethod}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
-      <input
-        type="text"
-        placeholder="Arrival Port / Destination"
-        value={arrivalPort}
-        onChange={(e) => setArrivalPort(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
-      />
-
       <input
         type="date"
-        placeholder="Shipping Date"
-        value={shippingDate}
-        onChange={(e) => setShippingDate(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        name="departureDate"
+        placeholder="Departure Date"
+        value={shippingData.departureDate}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
-
       <input
         type="date"
+        name="arrivalDate"
         placeholder="Arrival Date"
-        value={arrivalDate}
-        onChange={(e) => setArrivalDate(e.target.value)}
-        className="mb-3 p-2 border rounded w-full"
+        value={shippingData.arrivalDate}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
+      />
+      <input
+        type="text"
+        name="trackingNumber"
+        placeholder="Tracking Number"
+        value={shippingData.trackingNumber}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
+      />
+      <input
+        type="text"
+        name="destination"
+        placeholder="Destination"
+        value={shippingData.destination}
+        onChange={handleChange}
+        className="w-full border p-2 rounded"
       />
 
-      <textarea
-        placeholder="Shipping Conditions (e.g. refrigerated, halal-certified transport)"
-        value={shippingConditions}
-        onChange={(e) => setShippingConditions(e.target.value)}
-        className="mb-4 p-2 border rounded w-full"
-        rows={3}
-      />
-
-      <div className="flex justify-between">
-        <button
-          onClick={onPrev}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-        >
-          Previous
+      <div className="flex justify-between pt-4">
+        <button onClick={onPrev} className="bg-gray-500 text-white px-4 py-2 rounded">
+          Back
         </button>
-        <button
-          onClick={handleNext}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Next
+        <button onClick={handleSubmit} className="bg-blue-600 text-white px-4 py-2 rounded">
+          Save & Continue
         </button>
       </div>
     </div>

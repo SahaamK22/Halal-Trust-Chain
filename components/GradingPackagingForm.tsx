@@ -1,119 +1,132 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface GradingPackagingFormProps {
-  onNext: (data: Record<string, any>) => void;
-  onPrev: () => void;
+  animalId: string;
+  onSave: (data: Record<string, any>) => void;
+  onBack: () => void;
 }
 
-const GradingPackagingForm: React.FC<GradingPackagingFormProps> = ({
-  onNext,
-  onPrev,
-}) => {
-  const [formData, setFormData] = useState({
-    animalId: "",
-    gradingType: "",
-    meatCutType: "",
-    packagingType: "",
-    weight: "",
-    packagingDate: "",
-    expiryDate: "",
-    batchCode: "",
-  });
+export default function GradingPackagingForm({
+  animalId,
+  onSave,
+  onBack,
+}: GradingPackagingFormProps) {
+  const [gradingType, setGradingType] = useState('');
+  const [meatCutType, setMeatCutType] = useState('');
+  const [packagingType, setPackagingType] = useState('');
+  const [weight, setWeight] = useState('');
+  const [packagingDate, setPackagingDate] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [batchCode, setBatchCode] = useState('');
 
   useEffect(() => {
-    const savedData = localStorage.getItem("gradingPackagingData");
-    if (savedData) {
-      setFormData(JSON.parse(savedData));
+    const saved = localStorage.getItem(`gradingPackaging-${animalId}`);
+    if (saved) {
+      const data = JSON.parse(saved);
+      setGradingType(data.gradingType || '');
+      setMeatCutType(data.meatCutType || '');
+      setPackagingType(data.packagingType || '');
+      setWeight(data.weight || '');
+      setPackagingDate(data.packagingDate || '');
+      setExpiryDate(data.expiryDate || '');
+      setBatchCode(data.batchCode || '');
     }
-  }, []);
+  }, [animalId]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleNext = () => {
-    localStorage.setItem("gradingPackagingData", JSON.stringify(formData));
-    onNext(formData);
+  const handleSave = () => {
+    const data = {
+      animalId,
+      gradingType,
+      meatCutType,
+      packagingType,
+      weight,
+      packagingDate,
+      expiryDate,
+      batchCode,
+    };
+    localStorage.setItem(`gradingPackaging-${animalId}`, JSON.stringify(data));
+    onSave(data);
   };
 
   return (
-    <div className="p-4 space-y-4 bg-white shadow rounded-xl">
-      <h2 className="text-xl font-semibold">Grading & Packaging</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input
-          name="animalId"
-          value={formData.animalId}
-          onChange={handleChange}
-          placeholder="Animal ID"
-          className="input input-bordered w-full"
-        />
-        <input
-          name="gradingType"
-          value={formData.gradingType}
-          onChange={handleChange}
-          placeholder="Grading Type"
-          className="input input-bordered w-full"
-        />
-        <input
-          name="meatCutType"
-          value={formData.meatCutType}
-          onChange={handleChange}
-          placeholder="Meat Cut Type"
-          className="input input-bordered w-full"
-        />
-        <input
-          name="packagingType"
-          value={formData.packagingType}
-          onChange={handleChange}
-          placeholder="Packaging Type"
-          className="input input-bordered w-full"
-        />
-        <input
-          name="weight"
-          type="number"
-          value={formData.weight}
-          onChange={handleChange}
-          placeholder="Weight (kg)"
-          className="input input-bordered w-full"
-        />
-        <input
-          name="packagingDate"
-          type="date"
-          value={formData.packagingDate}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-        />
-        <input
-          name="expiryDate"
-          type="date"
-          value={formData.expiryDate}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-        />
-        <input
-          name="batchCode"
-          value={formData.batchCode}
-          onChange={handleChange}
-          placeholder="Batch Code"
-          className="input input-bordered w-full"
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold">Grading & Packaging Entry</h2>
+
+      <div>
+        <Label>Grading Type</Label>
+        <Input
+          value={gradingType}
+          onChange={(e) => setGradingType(e.target.value)}
+          placeholder="e.g. Grade A"
         />
       </div>
 
-      <div className="flex justify-between mt-6">
-        <button onClick={onPrev} className="btn btn-outline">
-          Previous
-        </button>
-        <button onClick={handleNext} className="btn btn-primary">
-          Next
-        </button>
+      <div>
+        <Label>Meat Cut Type</Label>
+        <Input
+          value={meatCutType}
+          onChange={(e) => setMeatCutType(e.target.value)}
+          placeholder="e.g. Ribeye"
+        />
+      </div>
+
+      <div>
+        <Label>Packaging Type</Label>
+        <Input
+          value={packagingType}
+          onChange={(e) => setPackagingType(e.target.value)}
+          placeholder="e.g. Vacuum Packed"
+        />
+      </div>
+
+      <div>
+        <Label>Weight (kg)</Label>
+        <Input
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+          type="number"
+          placeholder="e.g. 12.5"
+        />
+      </div>
+
+      <div>
+        <Label>Packaging Date</Label>
+        <Input
+          value={packagingDate}
+          onChange={(e) => setPackagingDate(e.target.value)}
+          type="date"
+        />
+      </div>
+
+      <div>
+        <Label>Expiry Date</Label>
+        <Input
+          value={expiryDate}
+          onChange={(e) => setExpiryDate(e.target.value)}
+          type="date"
+        />
+      </div>
+
+      <div>
+        <Label>Batch Code</Label>
+        <Input
+          value={batchCode}
+          onChange={(e) => setBatchCode(e.target.value)}
+          placeholder="e.g. BATCH-2025-001"
+        />
+      </div>
+
+      <div className="flex justify-between pt-4">
+        <Button variant="outline" onClick={onBack}>
+          Back
+        </Button>
+        <Button onClick={handleSave}>Save Grading & Packaging Entry</Button>
       </div>
     </div>
   );
-};
-
-export default GradingPackagingForm;
+}
